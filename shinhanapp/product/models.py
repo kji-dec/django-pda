@@ -1,0 +1,13 @@
+from django.db import models
+
+# Create your models here.
+class Product(models.Model):
+    title = models.CharField(max_length=128, verbose_name='상품명')
+    content = models.TextField(verbose_name='상품내용')
+    price = models.IntegerField(verbose_name='가격')
+    location = models.CharField(max_length=256, verbose_name='위치')
+
+    class Meta:
+        db_table = 'shinhan_product' # table명 지정
+        verbose_name = '상품'
+        verbose_name_plural = '상품'
