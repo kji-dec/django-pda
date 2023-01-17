@@ -6,7 +6,8 @@ jQuery(document).ready(function () {
                 $('#detailModalTitle').text(result.title);
                 $('#detailModalLocation').text(result.location);
                 $('#detailModalPrice').text(result.price);
-                $('#detailModalContent').text(result.content);
+                $('#detailModalContent').html(result.content);
+                $('#detailModalImage').attr("src", result.image);
                 $('#detailModal').modal("show");
             });
     });

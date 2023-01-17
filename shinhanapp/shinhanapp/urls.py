@@ -18,11 +18,15 @@ from django.urls import path
 
 # from member.views import main
 from product.views import main, detail, write
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     # path('', main),
     path('product/<int:pk>/', detail),
     path('', main),
-    path('write/', write),
+    path('product/write/', write),
 ]
+
+urlpatterns += static("/media/", document_root=settings.MEDIA_ROOT)
