@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-# from member.views import main
+from member.views import login
 from product.views import main, detail, write
 from django.conf import settings
 from django.conf.urls.static import static
@@ -25,8 +25,11 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     # path('', main),
     path('product/<int:pk>/', detail),
-    path('', main),
     path('product/write/', write),
+
+    path('member/login/', login),
+
+    path('', main),
 ]
 
 urlpatterns += static("/media/", document_root=settings.MEDIA_ROOT)

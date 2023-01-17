@@ -1,5 +1,5 @@
-from django.shortcuts import render
-# from .models import Member
+from django.shortcuts import render, redirect
+from .models import Member
 
 # Create your views here.
 
@@ -13,3 +13,20 @@ from django.shortcuts import render
 #     members = Member.objects.filter(name__contains="te").order_by('-age')
 
 #     return render(request, 'index.html', {'members': members})
+
+
+def login(request):
+    if request.method == 'POST':
+        user_id = request.POST.get("user_id")
+        password = request.POST.get("password")
+
+        if Member.objects.filter(user_id=user_id).exists():
+            member = Member.objects.get(user_id=user_id)
+            if member.password == password:
+                request.session['user_pk'] = member.id
+                request.session['user_id'] = member.user_id
+                return redirect('/')
+        print(user_id, password)
+        # login fail
+    
+    return render(request, 'login.html')
