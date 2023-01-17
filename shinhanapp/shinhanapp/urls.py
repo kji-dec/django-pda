@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from member.views import login, logout
+from member.views import login, logout, register
 from product.views import main, detail, write
 from django.conf import settings
 from django.conf.urls.static import static
@@ -29,6 +29,7 @@ urlpatterns = [
 
     path('member/login/', login),
     path('member/logout/', logout),
+    path('member/register/', register),
 
     path('', main),
 ]
