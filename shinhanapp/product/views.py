@@ -25,7 +25,7 @@ def detail(request, pk):
     return JsonResponse(ret)
 
 def write(request):
-    if not request.session.get('user_id'):
+    if not request.user.is_authenticated:
         return redirect('/member/login/')
 
     if request.method == 'POST':
