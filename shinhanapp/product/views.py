@@ -11,8 +11,6 @@ def main(request):
 def detail(request, pk):
     product = Product.objects.get(pk=pk)
 
-    
-
     ret = {
         'title': product.title,
         'content': product.content,
@@ -27,6 +25,9 @@ def detail(request, pk):
     return JsonResponse(ret)
 
 def write(request):
+    if not request.session.get('user_id'):
+        return redirect('/member/login/')
+
     if request.method == 'POST':
         product = Product(
             title=request.POST.get("title"),
