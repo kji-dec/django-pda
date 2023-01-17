@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.hashers import check_password
 from .models import Member
 
 # Create your views here.
@@ -22,7 +23,7 @@ def login(request):
 
         if Member.objects.filter(user_id=user_id).exists():
             member = Member.objects.get(user_id=user_id)
-            if member.password == password:
+            if check_password(password, member.password):
                 request.session['user_pk'] = member.id
                 request.session['user_id'] = member.user_id
                 return redirect('/')
