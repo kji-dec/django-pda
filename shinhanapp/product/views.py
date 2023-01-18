@@ -17,8 +17,9 @@ def detail(request, pk):
         'price': product.price,
         'location': product.location,
         'image': "/static/prod1.jpg",
+        'username': product.user.username,
     }
-
+    
     if product.image:
         ret['image'] = product.image.url
 
@@ -35,6 +36,7 @@ def write(request):
             price=request.POST.get("price"),
             location=request.POST.get("location"),
             image=request.FILES.get("image"),
+            user=request.user,
         )
         product.save()
         return redirect('/')
