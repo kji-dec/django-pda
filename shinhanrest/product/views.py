@@ -35,11 +35,21 @@ class ProductListView(APIView):
         # return Response({"id": product.id}, status=status.HTTP_201_CREATED)
 
     def get(self, request, *args, **kwargs):
-        product_list = Product.objects.all().order_by('id')
+        products = Product.objects.all()
 
         res_list = []
 
-        for product in product_list:
+        if 'price' in request.query_params:
+            price = request.query_params['price']
+            products = products.filter(price__lte=price)
+        
+        if 'name' in request.query_params:
+            name = request.query_params['name']
+            products = products.filter(name__contains=name)
+        
+        products = products.order_by('id')
+
+        for product in products:
             res = {
                 'id': product.id,
                 'name': product.name,
