@@ -27,6 +27,7 @@ class ProductListView(
         return products.order_by('id')
 
     def get(self, request, *args, **kwargs):
+        print(request.user)
         return self.list(request, args, kwargs)
 
     def post(self, request, *args, **kwargs):
