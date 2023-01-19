@@ -60,8 +60,8 @@ class CommentListView(
 ):
     serializer_class = CommentSerializer
     
-    def get_queryset(self): # kwargs가 dictionary형태이므로 get으로 받아와야 함
-        return Comment.objects.filter(product__pk=self.kwargs.get('product_id')).order_by('id')
+    def get_queryset(self): # kwargs가 dictionary형태이므로 get으로 받아와야 함 (list 내부의 get_queryset()함수에서 kwargs를 넘겨줌!)
+        return Comment.objects.filter(product__pk=self.kwargs.get('product_id')).order_by('-id')
     
     def get(self, request, *args, **kwargs): # kwargs에 {'product_id': product_id}가 담겨 오기 때문에 product_id를 별도로 작성할 필요가 없음
         return self.list(request, *args, **kwargs) # 여기서 kwargs에 product_id값도 담겨감!
