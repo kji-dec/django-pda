@@ -1,9 +1,11 @@
-from rest_framework import generics, mixins
-from .models import Product, Comment
+from rest_framework import generics, mixins, status
+from rest_framework.response import Response
+from .models import Product, Comment, Like
 from .serializers import (
     ProductSerializer, 
     CommentSerializer, 
     CommentCreateSerializer,
+    LikeCreateSerializer,
 )
 # from .paginations import ProductLargePagination
 
@@ -83,4 +85,17 @@ class CommentCreateView(
         return Comment.objects.all()
     
     def post(self, request, *args, **kwargs):
+        return self.create(request, args, kwargs)
+
+class LikeCreateView(
+    mixins.CreateModelMixin,
+    generics.GenericAPIView,
+):
+    serializer_class = LikeCreateSerializer
+
+    def post(self, request, *args, **kwargs):
+        like = Like.objects.filter(member=request.user.id, product_id=request.data.get('product'))
+        if like:
+            like.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
         return self.create(request, args, kwargs)
