@@ -1,6 +1,10 @@
 from rest_framework import generics, mixins
 from .models import Product, Comment
-from .serializers import ProductSerializer, CommentSerializer
+from .serializers import (
+    ProductSerializer, 
+    CommentSerializer, 
+    CommentCreateSerializer,
+)
 # from .paginations import ProductLargePagination
 
 
@@ -27,7 +31,6 @@ class ProductListView(
         return products.order_by('id')
 
     def get(self, request, *args, **kwargs):
-        print(request.user)
         return self.list(request, args, kwargs)
 
     def post(self, request, *args, **kwargs):
@@ -68,4 +71,16 @@ class CommentListView(
         # return Comment.objects.filter(product__pk=self.kwargs.get('product_id')).order_by('-id')
     
     def get(self, request, *args, **kwargs): # kwargs에 {'product_id': product_id}가 담겨 오기 때문에 product_id를 별도로 작성할 필요가 없음
-        return self.list(request, *args, **kwargs) # 여기서 kwargs에 product_id값도 담겨감!
+        return self.list(request, args, kwargs) # 여기서 kwargs에 product_id값도 담겨감!
+
+class CommentCreateView(
+    mixins.CreateModelMixin,
+    generics.GenericAPIView,
+):
+    serializer_class = CommentCreateSerializer
+
+    def get_queryset(self):
+        return Comment.objects.all()
+    
+    def post(self, request, *args, **kwargs):
+        return self.create(request, args, kwargs)
