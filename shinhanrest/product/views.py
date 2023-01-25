@@ -19,12 +19,12 @@ class ProductListView(
 ):
     serializer_class = ProductSerializer
     # pagination_class = ProductLargePagination
-    permission_classes = [
-        IsAuthenticated,
-    ]
+    # permission_classes = [
+    #     IsAuthenticated,
+    # ]
 
     def get_queryset(self):
-        products = Product.objects.all()
+        products = Product.objects.all().prefetch_related('comment_set', 'like_set')
         price = self.request.query_params.get('price')
         name = self.request.query_params.get('name')
 
@@ -73,7 +73,9 @@ class CommentListView(
     def get_queryset(self): # kwargs가 dictionary형태이므로 get으로 받아와야 함 (list 내부의 get_queryset()함수에서 kwargs를 넘겨줌!)
         product_id = self.kwargs.get('product_id')
         if product_id:
-            return Comment.objects.filter(product__pk=product_id).order_by('-id')
+            return Comment.objects.filter(product__pk=product_id)\
+                    .select_related('member', 'product')\
+                    .order_by('-id')
         return Comment.objects.none()
         # return Comment.objects.filter(product__pk=self.kwargs.get('product_id')).order_by('-id')
     
