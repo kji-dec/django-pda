@@ -23,5 +23,12 @@ class MemberSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Member
-        fields = '__all__'
-        extra_kwargs = {"password": {"write_only": True}}
+        fields = ('id', 'username', 'tel', 'password') # don't forget id field!
+        extra_kwargs = {
+            "id":{
+                "read_only": True,
+            },
+            "password": {
+                "write_only": True,
+            },
+        }
