@@ -1,5 +1,7 @@
 from rest_framework import generics, mixins, status
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+
 from .models import Product, Comment, Like
 from .serializers import (
     ProductSerializer, 
@@ -17,6 +19,9 @@ class ProductListView(
 ):
     serializer_class = ProductSerializer
     # pagination_class = ProductLargePagination
+    permission_classes = [
+        IsAuthenticated,
+    ]
 
     def get_queryset(self):
         products = Product.objects.all()
