@@ -1,8 +1,5 @@
-from rest_framework.response import Response
-from django.contrib.auth.hashers import make_password
-from rest_framework import status, mixins, generics
+from rest_framework import mixins, generics
 
-from .models import Member
 from .serializers import MemberSerializer
 
 
