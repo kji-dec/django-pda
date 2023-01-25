@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
     'rest_framework',
     'debug_toolbar',
     'product.apps.ProductConfig',
@@ -66,6 +67,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -172,3 +174,6 @@ AUTHENTICATION_BACKENDS = [
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
+
+if DEBUG: # cors allow all origins only in debug env
+    CORS_ALLOW_ALL_ORIGINS = True
