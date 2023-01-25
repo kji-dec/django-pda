@@ -3,13 +3,7 @@ from django.contrib.auth.hashers import make_password
 
 from .models import Member
 
-class MemberSerializer(serializers.ModelSerializer):
-    def validate(self, attrs):
-        request = self.context['request']
-        if Member.objects.filter(username=request.data.get('username')).exists():
-            return serializers.ValidationError('duplicated id.')
-        return attrs
-    
+class MemberSerializer(serializers.ModelSerializer):    
     def create(self, validated_data):
         member = Member.objects.create(
             username=validated_data['username'],
