@@ -20,6 +20,16 @@ class MemberSerializer(serializers.ModelSerializer):
     #     member.save()
 
     #     return member
+
+    # def validate(self, attrs):
+    #     if len(attrs['password']) < 8:
+    #         raise serializers.ValidationError('Too short password')
+        
+    #     if attrs['password'] != attrs['password2']:
+    #         raise serializers.ValidationError('different password')
+        
+    #     attrs['password'] = make_password(attrs['password'])
+    #     return attrs
     
     class Meta:
         model = Member
